@@ -101,3 +101,28 @@ font-size: 0;
 	color: #F15B31;
 	font-weight: 700;
 }
+
+#reset {
+	font-family: Raleway;
+	font-weight: 800;
+	font-size: 24px;
+	color: white;
+	background-color: #f15B31;
+	border-radius: 10px;
+	width: 150px;
+	height: 50px;
+	border: none;
+	margin-top: 20px;
+}
+
+#message-box, #score-board {
+	font-family: Raleway;
+	font-size: 28px;
+	font-weight: 600;
+	color: #f15B31;
+}
+
+#score-board {
+	margin-bottom: -20px;
+}
+

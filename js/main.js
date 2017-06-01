@@ -21,27 +21,54 @@ var cards = [
 },
 ];
 var cardsInPlay = [];
+var playerScore = 0;
 
 var checkForMatch = function() {
 	if (cardsInPlay[0] === cardsInPlay[1]) {
-      console.log("You found a match!");
+      var victory = document.getElementById("message-box");
+      victory.textContent = "Congratulations! You found a match!";
+      var scoreUpdate = document.getElementById("score-board");
+      playerScore = playerScore + 1;
+      scoreUpdate.textContent = "Score: " + playerScore;
     } else {
-      console.log("Sorry, try again.");
+      var defeat = document.getElementById("message-box");
+      defeat.textContent = "Sorry, try again!";
     }
 }
 
-var flipCard = function(cardID) {
-  console.log("User flipped " + cards[cardID].rank);
+var flipCard = function() {
+    var cardId = this.getAttribute('data-id');
+    cardsInPlay.push(cards[cardId].rank);
+    this.setAttribute("src", cards[cardId].cardImage);
 
-  cardsInPlay.push(cards[cardID].rank);
-
-  console.log(cards[cardID].cardImage);
-  console.log(cards[cardID].suit);
-
-  if (cardsInPlay.length === 2) {
-	checkForMatch();
-  };
+    if (cardsInPlay.length === 2) {
+	  checkForMatch();
+    };
 };
 
-flipCard(0);
-flipCard(2);
+var createBoard = function() {
+	for (var i = 0; i < cards.length; i++) {
+		var cardElement = document.createElement('img');
+		cardElement.setAttribute('src', 'images/back.png');
+		cardElement.setAttribute('data-id', i);
+		cardElement.addEventListener('click', flipCard);
+		document.getElementById("game-board").appendChild(cardElement);
+		document.getElementById('reset').addEventListener('click', resetBoard);
+	}
+};
+
+var resetBoard = function() {
+	cardsInPlay = [];
+	var clearBoard = document.getElementById("game-board");
+	while (clearBoard.firstChild) {
+    clearBoard.removeChild(clearBoard.firstChild);
+    }
+    var clearMessage = document.getElementById("message-box");
+    while (clearMessage.firstChild) {
+    clearMessage.removeChild(clearMessage.firstChild);
+    }
+    clearMessage.innerHTML = "<br>";
+	createBoard();
+};
+
+createBoard();
